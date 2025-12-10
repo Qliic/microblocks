@@ -1,0 +1,501 @@
+module 'Blocs QliiC'
+author unknown
+version 1 0 
+description ''
+variables cm 'QliiC LOG' 'QliiC Configuration' 
+
+  spec 'r' 'QliiC Bouton' 'QliiC Bouton _ A#0 ou B#4 ou Pin#' 'auto' '10'
+  spec 'r' 'QliiC Distance en cm' 'QliiC Distance en cm'
+  spec ' ' 'QliiC Initialiser Bouton' 'QliiC Bouton _ A#0 ou B#4 ou Pin# initialiser' 'auto' 10
+  spec ' ' 'QliiC Initialiser potentiomètre' 'QliiC Potentiomètre _ #32, #33, #34 ou #35 initialiser' 'num' 10
+  spec ' ' 'QliiC Initialiser senseur de distance HC-SR04 #12 et #13' 'QliiC Distance initialiser capteur HC-SR04 sur #12 et #13'
+  spec ' ' 'QliiC Initialiser Écran OLED' 'QliiC Initialiser Écran OLED'
+  spec 'r' 'QliiC Potentiomètre' 'QliiC Potentiomètre _' 'auto' '10'
+  spec ' ' 'QliiC Projet' 'QliiC Projet _ version _' 'str num' '10' 10
+  spec ' ' 'Qliic TEST' 'Qliic TEST'
+  spec ' ' 'QliiC Afficher' 'QliiC Afficher _ et attendre bouton A#0' 'str' '10'
+  spec ' ' 'QliiC Bouton TEST' 'QliiC TEST Bouton'
+  spec 'r' 'QliiC Capteur IR' 'QliiC Capteur IR numérique'
+  spec ' ' 'QliiC Capteur IR #14' 'QliiC Capteur IR initialiser sur #32 et #33'
+  spec 'r' 'QliiC Capteur IR analogique' 'QliiC Capteur IR analogique'
+  spec ' ' 'QliiC Distance TEST' 'QliiC TEST HC-SR04'
+  spec 'r' 'QliiC Humidité en %' 'QliiC Humidité en %'
+  spec ' ' 'QliiC Potentiomètre TEST' 'QliiC TEST Potentiomètre '
+  spec 'r' 'QliiC Température en celsius' 'QliiC Température en celsius'
+  spec ' ' 'QliiC Température et humidité DHT-11 sur #14' 'QliiC Température et humidité initialiser capteur DHT11 sur #14'
+  spec ' ' 'QliiC Température et humidité TEST' 'QliiC TEST DHT11'
+  spec ' ' 'QliiC Tester IR' 'QliiC TEST  IR'
+  spec 'r' 'QliiC Accéleration X' 'QliiC Accéleration X'
+  spec 'r' 'QliiC Accéleration Y' 'QliiC Accéleration Y'
+  spec 'r' 'QliiC Accéleration Z' 'QliiC Accéleration Z'
+  spec ' ' 'QliiC Accéléromètre TEST' 'QliiC TEST MPU 6050'
+  spec ' ' 'QliiC Accéléromètre initialiser MPU6050 sur I2C' 'QliiC Accéléromètre initialiser MPU 6050 sur I2C'
+  spec 'r' 'QliiC Couleur' 'QliiC Couleur'
+  spec ' ' 'QliiC Couleur TEST' 'QliiC TEST TCS34725'
+  spec ' ' 'QliiC Couleur inistialiser TCS34725 sur I2C' 'QliiC Couleur initialiser TCS34725 sur I2C'
+  spec ' ' 'QliiC Allumer LED broche' 'QliiC Allumer LED broche _ [2,5,17,18,19,23] _' 'num bool' 10 true
+  spec ' ' 'QliiC Buzzer #15 initialiser' 'QliiC Buzzer initialiser sur #15'
+  spec ' ' 'QliiC Buzzer jouer' 'QliiC Buzzer jouer _ hertz' 'num' 10
+  spec ' ' 'QliiC Buzzer silence' 'QliiC Buzzer silence'
+  spec ' ' 'QliiC Capteur de présence' 'QliiC Capteur de présence PIR initialiser sur #13'
+  spec 'r' 'QliiC Capteur de présence PIR initialiser sur #13' 'QliiC Capteur de présence PIR '
+  spec ' ' 'QliiC Jouer mélodie RTTL' 'QliiC Buzzer jouer mélodie _ en RTTTL' 'auto' 10
+  spec ' ' 'QliiC Jouer note' 'QliiC Buzzer jouer note _ octave _ durée _ milliseconde' 'str num num' '10' 10 10
+  spec ' ' 'QliiC LED RGB couleur' 'QliiC LED RGB couleur _' 'color'
+  spec ' ' 'QliiC LED RGB initialiser sur #12' 'QliiC LED RGB initialiser sur #12'
+  spec ' ' 'QliiC LED RGB éteindre' 'QliiC LED RGB éteindre'
+  spec ' ' 'QliiC LOG' 'QliiC LOG _' 'str' '10'
+  spec ' ' 'QliiC OLED effacer' 'QliiC OLED effacer'
+  spec ' ' 'QliiC RGB rouge' 'QliiC LED RGB rouge _ vert _ bleu _ (0-255)' 'num num num' 10 10 10
+  spec ' ' 'QliiC Servo broche' 'QliiC Servo broche _ à _ degrés' 'num auto' 10 '10'
+  spec ' ' 'QliiC Servo moteur initialiser sur broche' 'QliiC Servo moteur initialiser sur broche _ (#26, #27)' 'num' 10
+  spec ' ' 'QliiC TEST Buzzer' 'QliiC TEST Buzzer'
+  spec ' ' 'QliiC TEST LED' 'QliiC TEST LED'
+  spec ' ' 'QliiC TEST OLED' 'QliiC TEST OLED'
+  spec ' ' 'QliiC TEST PIR' 'QliiC TEST PIR'
+  spec ' ' 'QliiC TEST RGB' 'QliiC TEST RGB'
+  spec ' ' 'QliiC TEST Servo' 'QliiC TEST Servo'
+  spec ' ' 'QliiC Écrire' 'QliiC OLED écrire _' 'str' '10'
+
+to 'QliiC Accéleration X' {
+  return (mpu6050_tiltX)
+}
+
+to 'QliiC Accéleration Y' {
+  return (mpu6050_tiltY)
+}
+
+to 'QliiC Accéleration Z' {
+  return (mpu6050_tiltZ)
+}
+
+to 'QliiC Accéléromètre TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester MPU 6050' 1
+  'QliiC Accéléromètre initialiser MPU6050 sur I2C'
+  forever {
+    'QliiC LOG' = ('[data:join]' ' X:' ('QliiC Accéleration X') '    
+ Y:' ('QliiC Accéleration Y') '    
+ Z:' ('QliiC Accéleration Z') '    ')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 100
+  }
+}
+
+to 'QliiC Accéléromètre initialiser MPU6050 sur I2C' {
+  'QliiC Afficher' 'MPU 6050 sur bus I2C'
+}
+
+to 'QliiC Afficher' message {
+  if (v 'QliiC Configuration') {
+    sayIt message
+    OLEDclear
+    OLEDwrite message 8 0 false 2
+    waitMillis 1000
+    waitUntil (not (digitalReadOp 0))
+    OLEDclear
+  }
+}
+
+to 'QliiC Allumer LED broche' broche etat {
+  digitalWriteOp broche etat
+}
+
+to 'QliiC Bouton' boutonNom {
+  local 'boutonEtat' 0
+  if (boutonNom == 'A') {
+    return (not (digitalReadOp 0 'up'))
+  } (boutonNom == 'B') {
+    return (not (digitalReadOp 4 'up'))
+  } else {
+    return (not (digitalReadOp boutonNom 'up'))
+  }
+}
+
+to 'QliiC Bouton TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester boutons A B #16' 1
+  'QliiC Initialiser Bouton' 'A'
+  'QliiC Initialiser Bouton' 'B'
+  'QliiC Initialiser Bouton' 16
+  forever {
+    'QliiC LOG' = ('[data:join]' ' A0:' ('QliiC Bouton' 'A') '      B4:' ('QliiC Bouton' 'B') '     B16:' ('QliiC Bouton' 16) '    ')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 100
+  }
+}
+
+to 'QliiC Buzzer #15 initialiser' {
+  'attach buzzer to pin' 15
+  'QliiC Afficher' 'Buzzer sur broche #15'
+}
+
+to 'QliiC Buzzer jouer' frequence {
+  startTone frequence
+}
+
+to 'QliiC Buzzer silence' {
+  stopTone
+}
+
+to 'QliiC Capteur IR' {
+  return (not (digitalReadOp 32 'up'))
+}
+
+to 'QliiC Capteur IR #14' {
+  'QliiC Afficher' 'Capteur IR sur #32 #33'
+}
+
+to 'QliiC Capteur IR analogique' {
+  return (analogReadOp 33)
+}
+
+to 'QliiC Capteur de présence' {
+  'QliiC Afficher' 'Capteur PIR sur #13'
+}
+
+to 'QliiC Capteur de présence PIR initialiser sur #13' {
+  return (digitalReadOp 13 'up')
+}
+
+to 'QliiC Couleur' {
+  return (color ('TCS34725 rgb'))
+}
+
+to 'QliiC Couleur TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester TCS34725' 1
+  'QliiC Couleur inistialiser TCS34725 sur I2C'
+  forever {
+    'QliiC LOG' ('[data:join]' ' COULEUR
+' ('QliiC Couleur'))
+    waitMillis 100
+  }
+}
+
+to 'QliiC Couleur inistialiser TCS34725 sur I2C' {
+  if ('TCS34725 connected') {
+    'QliiC Afficher' 'TCS34725 sur bus I2C'
+  } else {
+    'QliiC Afficher' 'TCS34725 absent du bus I2C'
+  }
+}
+
+to 'QliiC Distance TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester HC-SR04' 1
+  'QliiC Initialiser senseur de distance HC-SR04 #12 et #13'
+  forever {
+    'QliiC LOG' = ('[data:join]' '  CM:' ('QliiC Distance en cm') '    ')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 100
+  }
+}
+
+to 'QliiC Distance en cm' {
+  return ('distance (cm)' 13 12)
+}
+
+to 'QliiC Humidité en %' {
+  return (humidity_DHT11 14)
+}
+
+to 'QliiC Initialiser Bouton' boutonNom {
+  if (boutonNom == 'A') {
+    'QliiC Afficher' 'Bouton A sur la pin #0'
+  } (boutonNom == 'B') {
+    'QliiC Afficher' 'Bouton B sur la pin #4'
+  } else {
+    'QliiC Afficher' ('[data:join]' 'Bouton sur la pin #' ('[data:convertType]' boutonNom 'string'))
+  }
+}
+
+to 'QliiC Initialiser potentiomètre' potentiometrePin {
+  if (potentiometrePin == 32) {
+    'QliiC Afficher' 'Potentiometre sur la broche #32'
+  } (potentiometrePin == 33) {
+    'QliiC Afficher' 'Potentiometre sur la broche #33'
+  } (potentiometrePin == 34) {
+    'QliiC Afficher' 'Potentiometre sur la broche #34'
+  } (potentiometrePin == 35) {
+    'QliiC Afficher' 'Potentiometre sur la broche #35'
+  } else {
+    sayIt 'Broche #' ('[data:convertType]' potentiometrePin 'string') 'non disponible'
+    stopTask
+  }
+}
+
+to 'QliiC Initialiser senseur de distance HC-SR04 #12 et #13' {
+  'QliiC Afficher' 'HC-SR04 trig  #13 echo #12'
+}
+
+to 'QliiC Initialiser Écran OLED' {
+  sayIt 'Brancher l''écran OLED sur le port I2C'
+  OLEDInit_I2C_auto 21 false
+  OLEDInit_I2C 'OLED_0.96in' '3C' 21 false
+  OLEDclear
+  OLEDwrite 'QliiC' 8 16 false 3
+  waitMillis 500
+  OLEDclear
+}
+
+to 'QliiC Jouer mélodie RTTL' mélodie {
+  comment 'Pacman:d=16,o=6,b=140:
+b5,b,f#,d#,8b,8d#,c,c7,g,f,8c7,8e,b5,b,f#,d#,8b,8d#,32d#,32e,f,32f,32f#,g,32g,32g#,a,8b'
+  'play ringtone' mélodie
+}
+
+to 'QliiC Jouer note' note octave duree {
+  'play tone' note octave duree
+}
+
+to 'QliiC LED RGB couleur' couleur {
+  setNeoPixelColor 1 couleur
+}
+
+to 'QliiC LED RGB initialiser sur #12' {
+  'QliiC Afficher' 'LED RGB sur #12'
+  neoPixelAttach 1 12
+}
+
+to 'QliiC LED RGB éteindre' {
+  clearNeoPixels
+}
+
+to 'QliiC LOG' message {
+  'QliiC LOG' = message
+  sayIt (v 'QliiC LOG')
+  OLEDwrite (v 'QliiC LOG') 0 0 false 2
+}
+
+to 'QliiC OLED effacer' {
+  OLEDclear
+}
+
+to 'QliiC Potentiomètre' potentiometrePin {
+  return (analogReadOp potentiometrePin)
+}
+
+to 'QliiC Potentiomètre TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester potentiometre #34 #35' 1
+  'QliiC Initialiser potentiomètre' 34
+  'QliiC Initialiser potentiomètre' 35
+  forever {
+    'QliiC LOG' = ('[data:join]' ' P34:' ('QliiC Potentiomètre' 34) '    
+ P35:' ('QliiC Potentiomètre' 35) '')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 100
+  }
+}
+
+to 'QliiC Projet' projetNom version {
+  sayIt 'Projet' projetNom 'version' version
+  OLEDclear
+  OLEDwrite projetNom 0 8 false 2
+  OLEDwrite 'v' 0 32 false 2
+  OLEDwrite version 20 32 false 2
+  waitMillis 500
+  OLEDclear
+  OLEDwrite 'CONFIG' 0 8 false 2
+  OLEDwrite 'BOUTON #0' 0 32 false 2
+  waitMillis 1000
+  OLEDclear
+  'QliiC Configuration' = (not (digitalReadOp 0 'up'))
+}
+
+to 'QliiC RGB rouge' rouge vert bleu {
+  setNeoPixelColor 1 (colorFromRGB rouge vert bleu)
+}
+
+to 'QliiC Servo broche' broche degre {
+  setServoAngle broche degre
+}
+
+to 'QliiC Servo moteur initialiser sur broche' broche {
+  'QliiC Afficher' ('[data:join]' 'Servo sur #' ('[data:convertType]' broche 'string'))
+}
+
+to 'QliiC TEST Buzzer' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester Buzzer' 1
+  'QliiC Buzzer #15 initialiser'
+  repeat 3 {
+    'QliiC Jouer note' 'a' 3 500
+    waitMillis 500
+  }
+  repeat 3 {
+    'QliiC Buzzer jouer' 440
+    waitMillis 500
+    'QliiC Buzzer silence'
+    waitMillis 500
+  }
+  'QliiC Jouer mélodie RTTL' 'Pacman:d=16,o=6,b=140:
+b5,b,f#,d#,8b,8d#,c,c7,g,f,8c7,8e'
+  for i ('[data:range]' 440 880) {
+    sayIt i
+    'QliiC Buzzer jouer' i
+  }
+  'QliiC Buzzer silence'
+}
+
+to 'QliiC TEST LED' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester LED' 1
+  forever {
+    'QliiC LOG' = 'LEDs OFF'
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    'QliiC Allumer LED broche' 2 false
+    'QliiC Allumer LED broche' 5 false
+    'QliiC Allumer LED broche' 17 false
+    'QliiC Allumer LED broche' 18 false
+    'QliiC Allumer LED broche' 19 false
+    'QliiC Allumer LED broche' 23 false
+    waitMillis 500
+    'QliiC LOG' = 'LEDs ON  '
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    'QliiC Allumer LED broche' 2 true
+    'QliiC Allumer LED broche' 5 true
+    'QliiC Allumer LED broche' 17 true
+    'QliiC Allumer LED broche' 18 true
+    'QliiC Allumer LED broche' 19 true
+    'QliiC Allumer LED broche' 23 true
+    waitMillis 500
+  }
+}
+
+to 'QliiC TEST OLED' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester OLED' 1
+  forever {
+    'QliiC Écrire' ' Allo!
+On QliiC
+ensemble ?'
+    waitMillis 3000
+    'QliiC OLED effacer'
+    waitMillis 1000
+  }
+}
+
+to 'QliiC TEST PIR' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester PIR' 1
+  'QliiC Capteur de présence'
+  forever {
+    'QliiC LOG' = ('[data:join]' ' PIR:' ('QliiC Capteur de présence PIR initialiser sur #13') '    ')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 100
+  }
+}
+
+to 'QliiC TEST RGB' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester RGB' 1
+  'QliiC LED RGB initialiser sur #12'
+  repeat 2 {
+    'QliiC RGB rouge' 100 0 0
+    waitMillis 500
+    'QliiC RGB rouge' 0 100 0
+    waitMillis 500
+    'QliiC RGB rouge' 0 0 100
+    waitMillis 500
+  }
+  forever {
+    'QliiC LED RGB couleur' (colorSwatch 189 65 190 255)
+    waitMillis 500
+    'QliiC LED RGB éteindre'
+    waitMillis 500
+  }
+}
+
+to 'QliiC TEST Servo' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester Servo' 1
+  'QliiC Servo moteur initialiser sur broche' 26
+  'QliiC Servo moteur initialiser sur broche' 27
+  repeat 2 {
+    'QliiC LOG' ' 0 degre'
+    'QliiC Servo broche' 26 0
+    'QliiC Servo broche' 27 0
+    waitMillis 1000
+    'QliiC LOG' ' 90 degre'
+    'QliiC Servo broche' 26 90
+    'QliiC Servo broche' 27 90
+    waitMillis 1000
+    'QliiC LOG' ' 0 degre'
+    'QliiC Servo broche' 26 0
+    'QliiC Servo broche' 27 0
+    waitMillis 1000
+    'QliiC LOG' ' -90 degre'
+    'QliiC Servo broche' 26 -90
+    'QliiC Servo broche' 27 -90
+    waitMillis 1000
+  }
+}
+
+to 'QliiC Température en celsius' {
+  return (temperature_DHT11 14)
+}
+
+to 'QliiC Température et humidité DHT-11 sur #14' {
+  'QliiC Afficher' 'DHT11 #14'
+}
+
+to 'QliiC Température et humidité TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester DHT11' 1
+  'QliiC Température et humidité DHT-11 sur #14'
+  forever {
+    'QliiC LOG' = ('[data:join]' '
+ TEMP:' ('QliiC Température en celsius') 'C   
+  HUM:' ('QliiC Humidité en %') '%')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 500
+  }
+}
+
+to 'QliiC Tester IR' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Tester IR' 1
+  'QliiC Capteur IR #14'
+  forever {
+    'QliiC LOG' = ('[data:join]' ' IRN:' ('QliiC Capteur IR') '     IRA:' ('QliiC Capteur IR analogique') '    ')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 1500
+  }
+}
+
+to 'QliiC Écrire' message {
+  OLEDwrite message 0 0 false 2
+}
+
+to 'Qliic TEST' {
+  'QliiC Initialiser Écran OLED'
+  'QliiC Projet' 'Librairie' 1
+  'QliiC Initialiser Bouton' 'A'
+  'QliiC Initialiser Bouton' 'B'
+  'QliiC Initialiser Bouton' 16
+  'QliiC Initialiser potentiomètre' 32
+  'QliiC Initialiser potentiomètre' 33
+  'QliiC Initialiser potentiomètre' 34
+  'QliiC Initialiser potentiomètre' 35
+  'QliiC Initialiser senseur de distance HC-SR04 #12 et #13'
+  forever {
+    'QliiC LOG' = ('[data:join]' '  B0:' ('QliiC Bouton' 'A') '      CM:' ('QliiC Distance en cm') '     P34:' ('QliiC Potentiomètre' 34) '    ')
+    'QliiC LOG' = ('[data:join]' 'A:' ('QliiC Bouton' 'A') ' B:' ('QliiC Bouton' 'B') ' B16:' ('QliiC Bouton' 16) ' P34:' ('QliiC Potentiomètre' 34) ' P35:' ('QliiC Potentiomètre' 35) ' P32:' ('QliiC Potentiomètre' 32) ' P33:' ('QliiC Potentiomètre' 33) ' CM:' ('QliiC Distance en cm'))
+    'QliiC LOG' = ('[data:join]' '  IR:' 'blocks' '      CM:')
+    sayIt (v 'QliiC LOG')
+    OLEDwrite (v 'QliiC LOG') 0 0 false 2
+    waitMillis 500
+  }
+}
+
