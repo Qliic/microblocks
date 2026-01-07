@@ -1,0 +1,73 @@
+module 'QliiC Motor I2C'
+author Francois Belleau
+version 1 4
+description ''
+
+variables _qliic_motor_power 
+choices menu_motor M1 M2 M3 M4
+
+  spec ' ' 'QliiC Motor I2C' 'QliiC Motor I2C _ power _ (-100 to 100)' 'menu.menu_motor num' 'M1' '0'
+  
+  spec ' ' 'QliiC stop all' 'QliiC stop all'
+  spec ' ' 'QliiC set power' 'QliiC set power _ (0 to 100)' 'num' '0'
+
+  spec ' ' 'QliiC forward' 'QliiC forward'
+  spec ' ' 'QliiC backward' 'QliiC backward'
+  spec ' ' 'QliiC turn left' 'QliiC turn left'
+  spec ' ' 'QliiC turn right' 'QliiC turn right'
+
+
+to 'QliiC Motor I2C' motor power {
+  comment 'choices menu_motor M1 M2 M3 M4
+
+ spec '' '' ''QliiC Motor I2C'' ''QliiC Motor I2C _ power _ (-100 to 100)'' ''menu.menu_motor num'' ''M1'' ''0'''
+
+  local 'i2c_addr' (hexToInt '10')
+  if (not (not ('[sensors:i2cExists]' i2c_addr))) {
+    sayIt 'Missing I2C module @ 0x10'
+  } else {
+    local 'clockwise' (booleanConstant true)
+    if (power < 0) {
+      clockwise = (booleanConstant false)
+      power = (0 - power)
+    }
+    power = ('[misc:rescale]' (minimum power 100) 0 100 0 255)
+    local 'reg' (ifExpression ('M1' == motor) 1 (ifExpression ('M2' == motor) 2 (ifExpression ('M3' == motor) 3 4)))
+    reg = (reg * 2)
+    sayIt reg clockwise power
+    i2cSet i2c_addr reg clockwise
+    i2cSet i2c_addr (reg + 1) power
+  }
+}
+
+to 'QliiC stop all' {
+  'QliiC Motor I2C' 'M1' '0'
+  'QliiC Motor I2C' 'M2' '0'
+  'QliiC Motor I2C' 'M3' '0'
+  'QliiC Motor I2C' 'M4' '0'
+}
+
+
+to 'QliiC backward' {
+  'QliiC Motor I2C' 'M1' (-1 * _qliic_motor_power)
+  'QliiC Motor I2C' 'M2' _qliic_motor_power
+}
+
+to 'QliiC forward' {
+  'QliiC Motor I2C' 'M1' _qliic_motor_power
+  'QliiC Motor I2C' 'M2' (-1 * _qliic_motor_power)
+}
+
+to 'QliiC set power' power {
+  _qliic_motor_power = power
+}
+
+to 'QliiC turn left' {
+  'QliiC Motor I2C' 'M1' _qliic_motor_power
+  'QliiC Motor I2C' 'M2' _qliic_motor_power
+}
+
+to 'QliiC turn right' {
+  'QliiC Motor I2C' 'M1' (-1 * _qliic_motor_power)
+  'QliiC Motor I2C' 'M2' (-1 * _qliic_motor_power)
+}
